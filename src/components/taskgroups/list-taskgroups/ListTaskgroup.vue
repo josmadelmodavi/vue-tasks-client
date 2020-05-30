@@ -2,9 +2,11 @@
 <div>
   <h1>List Taskgroup</h1>
   <ul>
-      <li v-for="taskgroup in taskgroups" :key="taskgroup.id">{{taskgroup}}</li>
+      <li v-for="taskgroup in taskgroups" :key="taskgroup.id">
+          <router-link
+            :to="{ name: 'showTaskgroup', params: { id: taskgroup.id } }">{{taskgroup.name}}</router-link>
+      </li>
   </ul>
-  <button @click="logout">Logout</button>
 </div>
 </template>
 
