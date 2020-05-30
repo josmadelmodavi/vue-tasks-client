@@ -11,8 +11,12 @@
       <label for="description">Description: {{taskgroup.description}}</label>
       <br />
 
-      <label for="frequency_type">Frequence Type: {{taskgroup.frequency_type}}</label>
+      <label for="frequency_type">Frequence Type: {{taskgroup.frequence_type}}</label>
       <br />
+
+      <ul>
+          <li v-for="taskitem in formattedTaskitems" :key="taskitem.id">{{taskitem}}</li>
+      </ul>
   </div>
 </template>
 
@@ -29,6 +33,27 @@ export default {
         getTaskgroupApi(this.id).then(response => {
             this.taskgroup = response.data.data;
         });        
+    },
+    methods: {
+        formatTaskItem(taskitem) {
+            return {
+                checked: taskitem.checked,
+                name: taskitem.task.name,
+                description: taskitem.task.description
+            };
+        }
+    },
+    computed: {
+        formattedTaskitems: function () {
+            if (!this.taskgroup.task_in_lists) {
+                return [];
+            }
+
+            const { task_in_lists: taskItems } = this.taskgroup;
+
+            return taskItems.map(this.formatTaskItem);
+            
+        }
     }
 };
 </script>
