@@ -14,7 +14,7 @@
       <label for="frequency_type">Frequence Type: {{taskgroup.frequence_type}}</label>
       <br />
 
-      <list-taskitem v-if="taskgroup.task_in_lists" v-bind:taskitems="taskgroup.task_in_lists"></list-taskitem>
+      <list-taskitem></list-taskitem>
 
       <!-- <ul>
           <li v-for="taskitem in taskgroup.task_in_lists" :key="taskitem.id">{{taskitem}}</li>
@@ -47,14 +47,14 @@ export default {
     components: {
         "list-taskitem": ListTaskitem
     },
-    data() {
-        return {
-            taskgroup: {}
-        };
-    },
+    computed: {
+        taskgroup() {
+            return this.$store.state.taskgroup;
+        }
+    },    
     mounted: function () {
         getTaskgroupApi(this.id).then(response => {
-            this.taskgroup = response.data.data;
+            this.$store.commit('taskgroup', response.data.data);
         });
     }
 };
