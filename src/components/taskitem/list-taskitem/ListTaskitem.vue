@@ -46,7 +46,7 @@ export default {
       };
     },
     isTaskitemChecked(taskitem) {
-      return !!taskitem.checked;
+      return taskitem.checked;
     },
     updateTaskItem(taskitem) {
       taskitem.checked = !taskitem.checked;
