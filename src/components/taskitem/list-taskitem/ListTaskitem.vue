@@ -7,7 +7,7 @@
           <li v-for="taskitem in formattedTaskitems" :key="taskitem.id">
               <div>
                   <label for="checked">checked:</label>
-                  <input type="checkbox" v-model="taskitem.checked" @click="updateTaskItem(taskitem)">
+                  <input type="checkbox" v-model="taskitem.checked" @click="updateTaskitem(taskitem)">
               </div>
               <div>
                   <label for="name">name: {{ taskitem.name }}</label>
@@ -15,27 +15,17 @@
               <div>
                   <label for="description">description: {{ taskitem.description }}</label>
               </div>
+              <br />
           </li>
       </ul>
   </div>
 </template>
 
 <script>
-import { updateTaskItemApi } from "../../../services/api";
+import { updateTaskitemApi } from "../../../services/api";
 
 export default {
   props: ["taskitems"],
-  computed: {
-    formattedTaskitems: function() {
-      return this.taskitems.map(this.formatTaskitem);
-    },
-    taskItemsOverview: function() {
-      const { formattedTaskitems, isTaskitemChecked } = this;
-      const totalCount = formattedTaskitems.length;
-      const checkedCount = formattedTaskitems.filter(isTaskitemChecked).length;
-      return `${checkedCount} of ${totalCount} task items are checked`;
-    }
-  },
   methods: {
     formatTaskitem(taskitem) {
       return {
@@ -48,11 +38,30 @@ export default {
     isTaskitemChecked(taskitem) {
       return taskitem.checked;
     },
-    updateTaskItem(taskitem) {
-      taskitem.checked = !taskitem.checked;
-      updateTaskItemApi(taskitem).then(response => {
+    updateTaskitem(taskitem) {
+        const mutableTaskitem = {
+            id: taskitem.id,
+            checked: !taskitem.checked
+        }
+    //   taskitem.checked = !taskitem.checked;
+      updateTaskitemApi(mutableTaskitem).then(response => {
         console.log(response.data.data);
       });
+    }
+  },
+  computed: {
+    formattedTaskitems: function() {
+      return this.taskitems.map(this.formatTaskitem);
+
+      if(!taskitems){
+        return [];
+      }
+    },
+    taskItemsOverview: function() {
+      const { formattedTaskitems, isTaskitemChecked } = this;
+      const totalCount = formattedTaskitems.length;
+      const checkedCount = formattedTaskitems.filter(isTaskitemChecked).length;
+      return `${checkedCount} of ${totalCount} task items are checked`;
     }
   }
 };
