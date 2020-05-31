@@ -23,6 +23,7 @@
                     <label for="description">description: {{ taskitem.description }}</label>
                 </div>
                 <div>
+                    <button @click="editTask(taskitem.task_id)">Edit this Taskitem</button>
                     <button @click="deleteTask(taskitem.task_id)">Delete this Taskitem</button>
                 </div>
                 <br />
@@ -64,9 +65,12 @@ export default {
     createTaskitem() {
         this.$router.push({ name: 'createTaskitem' })
     },
-    deleteTask(taskitemID) {
-      deleteTaskApi(taskitemID).then(
-        result => this.$router.go(),
+    editTask(taskitem) {
+      this.$router.push({ name: 'editTask', params: { idtask: taskitem }})
+    },
+    deleteTask(taskitem) {
+      deleteTaskApi(taskitem).then(
+        response => this.$router.go(),
         error => console.error(error.response.data.error_message)
       )
     }

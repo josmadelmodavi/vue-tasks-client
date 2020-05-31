@@ -5,7 +5,8 @@ import ShowTaskgroup from './components/taskgroups/show-taskgroup/ShowTaskgroup.
 import CreateTaskgroup from './components/taskgroups/create-taskgroup/CreateTaskgroup.vue';
 import CreateTaskitem from './components/taskitem/create-taskitem/CreateTaskitem.vue';
 import DeleteTaskgroup from './components/taskgroups/delete-taskgroup/DeleteTaskgroup.vue';
-import DeleteTaskitem from './components/taskitem/delete-taskitem/DeleteTaskitem.vue';
+// import DeleteTaskitem from './components/taskitem/delete-taskitem/DeleteTaskitem.vue';
+import EditTask from './components/taskitem/edit-task/EditTask.vue';
 
 export const routes = [
     {
@@ -57,10 +58,19 @@ export const routes = [
             requiresAuth: true
         }
     },
+    // {
+    //     name: 'deleteTaskitem',
+    //     path: '/taskgroup/show/:id/taskitem/:taskitem.id',
+    //     component: DeleteTaskitem,
+    //     props: true,
+    //     meta: {
+    //         requiresAuth: true
+    //     }
+    // },
     {
-        name: 'deleteTaskitem',
-        path: '/taskgroup/show/:id/taskitem/:taskitem.id',
-        component: DeleteTaskitem,
+        name: 'editTask',
+        path: '/taskgroup/show/:id/task/edit/:idtask',
+        component: EditTask,
         props: true,
         meta: {
             requiresAuth: true

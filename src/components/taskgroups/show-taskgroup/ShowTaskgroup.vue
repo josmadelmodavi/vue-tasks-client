@@ -21,26 +21,6 @@
         <br />
 
         <list-taskitem></list-taskitem>
-
-        <!-- <ul>
-            <li v-for="taskitem in taskgroup.task_in_lists" :key="taskitem.id">{{taskitem}}</li>
-        </ul>
-        
-        <ul>
-            <li v-for="taskitem in formattedTaskitems" :key="taskitem.id">{{taskitem}}</li>
-        </ul>
-
-        <ul>
-            <li v-for="taskitem in formattedTaskitems" :key="taskitem.id">
-                <label for="id">id: {{taskitem.id}}</label>
-                <br />
-                <label for="checked">checked: {{taskitem.checked}}</label>
-                <br />
-                <label for="name">name: {{taskitem.name}}</label>
-                <br />
-                <label for="description">description: {{taskitem.description}}</label>
-            </li>
-        </ul> -->
     </div>
 </template>
 
