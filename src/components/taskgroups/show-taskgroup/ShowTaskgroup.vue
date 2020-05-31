@@ -17,16 +17,33 @@
       <label for="taskItemsOverview">{{taskItemsOverview}}</label>
       <br />
 
+      <!-- <list-taskitem v-if="taskgroup.task_in_lists" v-bind:taskitems="taskgroup.task_in_lists"></list-taskitem> -->
+
       <ul>
           <li v-for="taskitem in formattedTaskitems" :key="taskitem.id">{{taskitem}}</li>
+      </ul>
+
+      <ul>
+          <li v-for="taskitem in formattedTaskitems" :key="taskitem.id">
+            <label for="checked">checked: {{taskitem.checked}}</label>
+            <br />
+            <label for="name">name: {{taskitem.name}}</label>
+            <br />
+            <label for="description">description: {{taskitem.description}}</label>
+          </li>
       </ul>
   </div>
 </template>
 
 <script>
 import { getTaskgroupApi } from "./../../../services/api";
+import ListTaskitem from "./../../taskitem/list-taskitem/ListTaskitem.vue";
+
 export default {
     props: ["id"],
+    components: {
+        "list-taskitem": ListTaskitem
+    },
     data() {
         return {
             taskgroup: {}
@@ -35,7 +52,7 @@ export default {
     mounted: function () {
         getTaskgroupApi(this.id).then(response => {
             this.taskgroup = response.data.data;
-        });        
+        });
     },
     methods: {
         formatTaskitem(taskitem) {
