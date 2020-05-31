@@ -3,7 +3,7 @@
   <div>
         <h1>List Taskitem</h1>
         <div>
-            <button @click="createTaskitem()">New Taskitem</button>              
+            <button @click="createTaskitem()">New Taskitem</button>
         </div>
         <br />
         <label for="taskItemsOverview">{{taskItemsOverview}}</label>
@@ -14,13 +14,16 @@
                     <input type="checkbox" v-model="taskitem.checked" @click="updateTaskitem(taskitem)">
                 </div>
                 <div>
+                    <label for="name">id: {{ taskitem.id }}</label>
+                </div>
+                <div>
                     <label for="name">name: {{ taskitem.name }}</label>
                 </div>
                 <div>
                     <label for="description">description: {{ taskitem.description }}</label>
                 </div>
                 <div>
-                    <button @click="deleteTaskitem()">Delete this Taskitem</button>              
+                    <button @click="deleteTask(taskitem.task_id)">Delete this Taskitem</button>
                 </div>
                 <br />
             </li>
@@ -30,6 +33,7 @@
 
 <script>
 import { updateTaskitemApi } from "../../../services/api";
+import { deleteTaskApi } from "../../../services/api";
 import { mapState, mapMutations } from "vuex";
 
 export default {
@@ -40,7 +44,8 @@ export default {
         id: taskitem.id,
         checked: taskitem.checked,
         name: taskitem.task.name,
-        description: taskitem.task.description
+        description: taskitem.task.description,
+        task_id: taskitem.task.id
       };
     },
     isTaskitemChecked(taskitem) {
@@ -51,16 +56,19 @@ export default {
             id: taskitem.id,
             checked: !taskitem.checked
         }
-    //   taskitem.checked = !taskitem.checked;
-      updateTaskitemApi(mutableTaskitem).then(response => {
-          this.setTaskitem(mutableTaskitem)
-      });
+        // taskitem.checked = !taskitem.checked;
+        updateTaskitemApi(mutableTaskitem).then(response => {
+            this.setTaskitem(mutableTaskitem)
+        });
     },
     createTaskitem() {
         this.$router.push({ name: 'createTaskitem' })
     },
-    deleteTaskitem(taskitem) {
-        
+    deleteTask(taskitemID) {
+      deleteTaskApi(taskitemID).then(
+        result => this.$router.go(),
+        error => console.error(error.response.data.error_message)
+      )
     }
   },
   computed: {

@@ -12,7 +12,12 @@
         </div>
         <div>
             <label for="name">Frequence Type:</label>
-            <input type="text" v-model="frequence_type" required>
+            <select v-model="frequence_type">
+                <option value="daily">daily</option> 
+                <option value="monthly">monthly</option>
+                <option value="weekly">weekly</option>
+                <option value="yearly">yearly</option>
+            </select>
         </div>
         <p><button @click="createTaskgroup(name, description, frequence_type)">Create</button></p>
     </div>

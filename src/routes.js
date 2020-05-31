@@ -5,6 +5,7 @@ import ShowTaskgroup from './components/taskgroups/show-taskgroup/ShowTaskgroup.
 import CreateTaskgroup from './components/taskgroups/create-taskgroup/CreateTaskgroup.vue';
 import CreateTaskitem from './components/taskitem/create-taskitem/CreateTaskitem.vue';
 import DeleteTaskgroup from './components/taskgroups/delete-taskgroup/DeleteTaskgroup.vue';
+import DeleteTaskitem from './components/taskitem/delete-taskitem/DeleteTaskitem.vue';
 
 export const routes = [
     {
@@ -49,8 +50,17 @@ export const routes = [
     },
     {
         name: 'createTaskitem',
-        path: '/taskitem/create',
+        path: '/taskgroup/show/:id/taskitem/create',
         component: CreateTaskitem,
+        props: true,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        name: 'deleteTaskitem',
+        path: '/taskgroup/show/:id/taskitem/:taskitem.id',
+        component: DeleteTaskitem,
         props: true,
         meta: {
             requiresAuth: true

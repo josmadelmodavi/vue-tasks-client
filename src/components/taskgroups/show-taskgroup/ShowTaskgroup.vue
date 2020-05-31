@@ -46,7 +46,7 @@
 
 <script>
 import { getTaskgroupApi } from "./../../../services/api";
-import ListTaskitem from "./../../taskitem/list-taskitem/ListTaskitem.vue";
+import ListTaskitem from "./../../taskitem/list-taskitem/ListTaskitem";
 import { mapState, mapMutations } from "vuex";
 
 export default {

@@ -32,9 +32,9 @@ export default {
     },
     methods: {
         createTaskitem(name, description) {
-            createTaskitemApi(name, description).then(
+            createTaskitemApi(name, description, this.id).then(
                 result => {
-                    this.$router.push({name: "listTaskgroup"});
+                    this.$router.push({name: "showTaskgroup"});
                 },
                 error => console.log(error.response.data.error_message)
             );
