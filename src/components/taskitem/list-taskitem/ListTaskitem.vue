@@ -23,6 +23,7 @@
 
 <script>
 import { updateTaskitemApi } from "../../../services/api";
+import { mapState } from "vuex";
 
 export default {
   methods: {
@@ -44,14 +45,12 @@ export default {
         }
     //   taskitem.checked = !taskitem.checked;
       updateTaskitemApi(mutableTaskitem).then(response => {
-        console.log(response.data.data);
+          this.$store.commit('taskitem', mutableTaskitem)
       });
     }
   },
   computed: {
-      taskitems () {
-          return this.$store.state.taskitems;
-      },
+    ...mapState(["taskitems"]),
     formattedTaskitems: function() {
       return this.taskitems.map(this.formatTaskitem);
 
