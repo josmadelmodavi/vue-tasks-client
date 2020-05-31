@@ -7,6 +7,7 @@
             :to="{ name: 'showTaskgroup', params: { id: taskgroup.id } }">{{taskgroup.name}}</router-link>
       </li>
   </ul>
+  <button @click="doLogout()">Logout</button>
 </div>
 </template>
 
@@ -24,6 +25,12 @@ export default {
             result => (this.taskgroups = result.data.data), 
             error => console.log(error.response.data.error_message)
         );
+    },
+    methods: {
+        doLogout() {
+            localStorage.removeItem('token')
+            this.$router.push({ name: 'login' })
+        }
     }
 };
 </script>
