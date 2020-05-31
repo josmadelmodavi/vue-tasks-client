@@ -1,13 +1,13 @@
 <template>
 <div>
   <h1>List Taskgroup</h1>
+  <button @click="createTaskgroup()">New Taskgroup</button>
   <ul>
       <li v-for="taskgroup in taskgroups" :key="taskgroup.id">
           <router-link
             :to="{ name: 'showTaskgroup', params: { id: taskgroup.id } }">{{taskgroup.name}}</router-link>
       </li>
   </ul>
-  <button @click="doLogout()">Logout</button>
 </div>
 </template>
 
@@ -30,6 +30,9 @@ export default {
         doLogout() {
             localStorage.removeItem('token')
             this.$router.push({ name: 'login' })
+        },
+        createTaskgroup() {
+            this.$router.push({ name: 'createTaskgroup' })
         }
     }
 };

@@ -1,32 +1,40 @@
 // src/components/taskitem/list-taskitem/ListTaskitem.vue
 <template>
   <div>
-      <h1>List Taskitem</h1>
-      <label for="taskItemsOverview">{{taskItemsOverview}}</label>
-      <ul>
-          <li v-for="taskitem in formattedTaskitems" :key="taskitem.id">
-              <div>
-                  <label for="checked">checked:</label>
-                  <input type="checkbox" v-model="taskitem.checked" @click="updateTaskitem(taskitem)">
-              </div>
-              <div>
-                  <label for="name">name: {{ taskitem.name }}</label>
-              </div>
-              <div>
-                  <label for="description">description: {{ taskitem.description }}</label>
-              </div>
-              <br />
-          </li>
-      </ul>
-  </div>
+        <h1>List Taskitem</h1>
+        <div>
+            <button @click="createTaskitem()">New Taskitem</button>              
+        </div>
+        <br />
+        <label for="taskItemsOverview">{{taskItemsOverview}}</label>
+        <ul>
+            <li v-for="taskitem in formattedTaskitems" :key="taskitem.id">
+                <div>
+                    <label for="checked">checked:</label>
+                    <input type="checkbox" v-model="taskitem.checked" @click="updateTaskitem(taskitem)">
+                </div>
+                <div>
+                    <label for="name">name: {{ taskitem.name }}</label>
+                </div>
+                <div>
+                    <label for="description">description: {{ taskitem.description }}</label>
+                </div>
+                <div>
+                    <button @click="deleteTaskitem()">Delete this Taskitem</button>              
+                </div>
+                <br />
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>
 import { updateTaskitemApi } from "../../../services/api";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   methods: {
+    ...mapMutations(["setTaskitem"]),
     formatTaskitem(taskitem) {
       return {
         id: taskitem.id,
@@ -45,8 +53,14 @@ export default {
         }
     //   taskitem.checked = !taskitem.checked;
       updateTaskitemApi(mutableTaskitem).then(response => {
-          this.$store.commit('taskitem', mutableTaskitem)
+          this.setTaskitem(mutableTaskitem)
       });
+    },
+    createTaskitem() {
+        this.$router.push({ name: 'createTaskitem' })
+    },
+    deleteTaskitem(taskitem) {
+        
     }
   },
   computed: {

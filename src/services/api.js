@@ -1,10 +1,11 @@
 // ./src/services/api.js
 import axios from 'axios'
 
-const HOST = "https://edimossilva-task-manager.herokuapp.com/";
+const HOST = "https://edimossilva-task-manager.herokuapp.com";
 const LOGIN_URL = `${HOST}/auth/login`;
 const TASKGROUP_URL = `${HOST}/task_lists`;
 const TASKITEM_URL = `${HOST}/task_in_lists`;
+const TASKITEMCREATE_URL = `${HOST}/task_with_task_list`;
 
 export const getRequestConfig = () => {
     const token = localStorage.getItem("token");
@@ -33,9 +34,27 @@ export const getTaskgroupApi = id => {
     return axios.get(getTaskgroupApiURL, getRequestConfig());
 };
 
+export const createTaskitemApi = (name, description, task_list_id) => {
+    const params = {name, description, task_list_id}
+
+    return axios.post(TASKITEMCREATE_URL, params, getRequestConfig());
+};
+
 export const updateTaskitemApi = taskitem => {
     const getTaskgroupApiURL = `${TASKITEM_URL}/${taskitem.id}`;
     const params = { checked: taskitem.checked };
 
     return axios.put(getTaskgroupApiURL, params, getRequestConfig());
+};
+
+export const createTaskgroupApi = (name, description, frequence_type) => {
+    const params = {name, description, frequence_type}
+
+    return axios.post(TASKGROUP_URL, params, getRequestConfig());
+};
+
+export const deleteTaskgroupApi = id => {
+    const deleteTaskgroupApiURL = `${TASKGROUP_URL}/${id}`;
+
+    return axios.delete(deleteTaskgroupApiURL, getRequestConfig());
 };
