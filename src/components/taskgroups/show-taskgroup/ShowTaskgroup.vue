@@ -15,7 +15,7 @@
         <br />
         <br />
         <div>
-            <button @click="deleteTaskgroup()">Delete this Taskgroup</button>
+            <button @click="listTaskgroups()">Go back view all Taskgroups</button>
         </div>
 
         <br />
@@ -26,6 +26,7 @@
 
 <script>
 import { getTaskgroupApi } from "./../../../services/api";
+import { deleteTaskgroupApi } from "./../../../services/api";
 import ListTaskitem from "./../../taskitem/list-taskitem/ListTaskitem";
 import { mapState, mapMutations } from "vuex";
 
@@ -44,6 +45,18 @@ export default {
     },
     methods: {
         ...mapMutations(["setTaskgroup"]),
+        // deleteTaskgroup(id) {
+        //     deleteTaskgroupApi(id).then(
+        //         result => {
+        //             console.log(result.data.data),
+        //             this.$router.go()
+        //         },
+        //         error => console.log(error.response.data.error_message)
+        //     )
+        // }
+        listTaskgroups() {
+            this.$router.push({name: "listTaskgroup"});
+        }
     }
 };
 </script>

@@ -2,12 +2,22 @@
     <div>
         <h1>List Taskgroup</h1>
         <button @click="createTaskgroup()">New Taskgroup</button>
-        <ul>
+        <p><table border="1px" width="400px">
+            <th>name taskgroup</th>
+            <th>action</th>
+            <tr v-for="taskgroup in taskgroups" :key="taskgroup.id" align="center">
+                <td><router-link
+                    :to="{ name: 'showTaskgroup', params: { id: taskgroup.id } }">{{ taskgroup.name }}</router-link></td>
+                <td><button @click="deleteTaskgroup(taskgroup.id)">Delete</button></td>
+            </tr>
+        </table></p>
+        <!-- <ul>
             <li v-for="taskgroup in taskgroups" :key="taskgroup.id">
                 <router-link
-                    :to="{ name: 'showTaskgroup', params: { id: taskgroup.id } }">{{taskgroup.name}}</router-link>
+                    :to="{ name: 'showTaskgroup', params: { id: taskgroup.id } }">{{ taskgroup.name }}</router-link>
+                <button @click="deleteTaskgroup(taskgroup.id)">Delete</button>
             </li>
-        </ul>
+        </ul> -->
         <p><button @click="doLogout()">Logout</button></p>
     </div>
 </template>
@@ -38,8 +48,9 @@ export default {
         },
         deleteTaskgroup(id) {
             deleteTaskgroupApi(id).then(
-                result => {console.log(result.data.data),
-                this.$router.go()
+                result => {
+                    console.log('result.data.data'),
+                    this.$router.go()
                 },
                 error => console.log(error.response.data.error_message)
             )

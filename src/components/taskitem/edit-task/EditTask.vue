@@ -4,7 +4,7 @@
         <h1>Edit task name - id: {{ idtask }}</h1>
         <div>
             <label>name:</label>
-            <input type="text" v-model="name" />
+            <input type="text" v-model="name" autofocus="autofocus" />
         </div>
         <div>
             <label>description:</label>
@@ -21,8 +21,8 @@ export default {
     props: ['idtask'],
     data() {
         return {
-        name: "",
-        description: ""
+            name: "",
+            description: ""
         }
     },
     methods: {

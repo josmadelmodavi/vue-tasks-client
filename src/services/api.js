@@ -73,9 +73,9 @@ export const deleteTaskApi = (id) => {
 };
 
 export const updateTaskApi = (id, name, description) => {
-  console.log(id, name, description)
-  const getUpdateTaskApiURL = `${TASK_URL}/${id}`
-  const params = { name, description }
+    console.log(id, name, description)
+    const getUpdateTaskApiURL = `${TASK_URL}/${id}`
+    const params = { name, description }
 
-  return axios.put(getUpdateTaskApiURL, params, getRequestConfig());
+    return axios.put(getUpdateTaskApiURL, params, getRequestConfig());
 };
