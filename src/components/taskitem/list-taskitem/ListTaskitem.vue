@@ -1,20 +1,32 @@
 // src/components/taskitem/list-taskitem/ListTaskitem.vue
 <template>
-  <div>
+    <div>
         <h1>List Taskitem</h1>
         <div>
             <button @click="createTaskitem()">New Taskitem</button>
         </div>
         <br />
         <label for="taskItemsOverview">{{taskItemsOverview}}</label>
-        <ul>
+        <p><table border="1px" width="400px">
+            <th>checked</th>
+            <th>name</th>
+            <th>description</th>
+            <th>actions</th>
+            <tr v-for="taskitem in formattedTaskitems" :key="taskitem.id" align="center">
+                <td><input type="checkbox" v-model="taskitem.checked" @click="updateTaskitem(taskitem)"></td>
+                <td><label for="name">{{ taskitem.name }}</label></td>
+                <td><label for="description">{{ taskitem.description }}</label></td>
+                <td>
+                    <button @click="editTask(taskitem.task_id)">Edit</button>
+                    <button @click="deleteTask(taskitem.task_id)">Delete</button>
+                </td>
+            </tr>
+        </table></p>
+        <!-- <ul>
             <li v-for="taskitem in formattedTaskitems" :key="taskitem.id">
                 <div>
                     <label for="checked">checked:</label>
                     <input type="checkbox" v-model="taskitem.checked" @click="updateTaskitem(taskitem)">
-                </div>
-                <div>
-                    <label for="name">id: {{ taskitem.id }}</label>
                 </div>
                 <div>
                     <label for="name">name: {{ taskitem.name }}</label>
@@ -28,7 +40,7 @@
                 </div>
                 <br />
             </li>
-        </ul>
+        </ul> -->
     </div>
 </template>
 
@@ -38,19 +50,19 @@ import { deleteTaskApi } from "../../../services/api";
 import { mapState, mapMutations } from "vuex";
 
 export default {
-  methods: {
+    methods: {
     ...mapMutations(["setTaskitem"]),
     formatTaskitem(taskitem) {
-      return {
-        id: taskitem.id,
-        checked: taskitem.checked,
-        name: taskitem.task.name,
-        description: taskitem.task.description,
-        task_id: taskitem.task.id
-      };
+        return {
+            id: taskitem.id,
+            checked: taskitem.checked,
+            name: taskitem.task.name,
+            description: taskitem.task.description,
+            task_id: taskitem.task.id
+        };
     },
     isTaskitemChecked(taskitem) {
-      return taskitem.checked;
+        return taskitem.checked;
     },
     updateTaskitem(taskitem) {
         const mutableTaskitem = {
@@ -66,29 +78,32 @@ export default {
         this.$router.push({ name: 'createTaskitem' })
     },
     editTask(taskitem) {
-      this.$router.push({ name: 'editTask', params: { idtask: taskitem }})
+        this.$router.push({ name: 'editTask', params: { idtask: taskitem }})
     },
     deleteTask(taskitem) {
-      deleteTaskApi(taskitem).then(
-        response => this.$router.go(),
-        error => console.error(error.response.data.error_message)
-      )
+        if (window.confirm("Do you want to delete this Taskitem?")) {
+            deleteTaskApi(taskitem).then(
+                response => this.$router.go(),
+                error => console.error(error.response.data.error_message)
+            )
+        }
     }
   },
   computed: {
     ...mapState(["taskitems"]),
     formattedTaskitems: function() {
-      return this.taskitems.map(this.formatTaskitem);
+        return this.taskitems.map(this.formatTaskitem);
 
-      if(!taskitems){
-        return [];
-      }
+        if(!taskitems){
+            return [];
+        }
     },
     taskItemsOverview: function() {
-      const { formattedTaskitems, isTaskitemChecked } = this;
-      const totalCount = formattedTaskitems.length;
-      const checkedCount = formattedTaskitems.filter(isTaskitemChecked).length;
-      return `${checkedCount} of ${totalCount} task items are checked`;
+        const { formattedTaskitems, isTaskitemChecked } = this;
+        const totalCount = formattedTaskitems.length;
+        const checkedCount = formattedTaskitems.filter(isTaskitemChecked).length;
+
+        return `${checkedCount} of ${totalCount} task items are checked`;
     }
   }
 };

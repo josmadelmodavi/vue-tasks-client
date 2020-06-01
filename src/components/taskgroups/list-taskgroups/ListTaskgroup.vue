@@ -1,3 +1,4 @@
+// src/components/taskgroups/list-taskgroup/ListTaskgroup.vue
 <template>
     <div>
         <h1>List Taskgroup</h1>
@@ -40,20 +41,24 @@ export default {
     },
     methods: {
         doLogout() {
-            localStorage.removeItem('token')
-            this.$router.push({ name: 'login' })
+            if (window.confirm("Confirm to logout!")) {
+                localStorage.removeItem('token')
+                this.$router.push({ name: 'login' })
+            }
         },
         createTaskgroup() {
             this.$router.push({ name: 'createTaskgroup' })
         },
         deleteTaskgroup(id) {
-            deleteTaskgroupApi(id).then(
-                result => {
-                    console.log('result.data.data'),
-                    this.$router.go()
-                },
-                error => console.log(error.response.data.error_message)
-            )
+            if (window.confirm("Do you want to delete this Taskgroup?")) {
+                deleteTaskgroupApi(id).then(
+                    result => {
+                        console.log('result.data.data'),
+                        this.$router.go()
+                    },
+                    error => console.log(error.response.data.error_message)
+                )
+            }
         }
     }
 };

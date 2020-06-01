@@ -17,9 +17,6 @@
         <div>
             <button @click="listTaskgroups()">Go back view all Taskgroups</button>
         </div>
-
-        <br />
-
         <list-taskitem></list-taskitem>
     </div>
 </template>

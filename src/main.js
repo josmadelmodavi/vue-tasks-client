@@ -9,8 +9,8 @@ Vue.use(VueRouter);
 Vue.prototype.$http = axios;
 
 new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App)
+    el: '#app',
+    router,
+    store,
+    render: h => h(App)
 });
